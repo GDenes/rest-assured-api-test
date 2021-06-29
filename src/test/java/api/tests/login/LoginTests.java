@@ -2,15 +2,20 @@ package api.tests.login;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import api.base.RestAssuredSetup;
+import api.base.ApiTestBase;
 import api.enums.EndPoints;
 import api.enums.Method;
-import java.util.HashMap;
-import java.util.Map;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import models.login.Login;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class LoginTests extends RestAssuredSetup {
+@Epic("Reqres Api tests")
+@Feature("Login tests")
+public class LoginTests extends ApiTestBase {
 
     private static final String EMAIL = "eve.holt@reqres.in";
     private static final String PASSWORD = "cityslicka";
@@ -18,8 +23,10 @@ public class LoginTests extends RestAssuredSetup {
     private static final String MISSING_PASSWORD = "Missing password";
     private static final String MISSING_EMAIL_OR_USERNAME = "Missing email or username";
 
-
     @Test
+    @Story("Testing success login functionality")
+    @DisplayName("Successfully login test")
+    @Description("In this case, test login with valid credentials")
     public void successfulLoginTest() {
         Login loginData = Login.builder()
                 .email(EMAIL)
@@ -33,6 +40,9 @@ public class LoginTests extends RestAssuredSetup {
     }
 
     @Test
+    @Story("Testing login functionality - negative scenario")
+    @DisplayName("Missing password login test")
+    @Description("In this case, test login without password")
     public void missingPasswordLoginTest() {
         Login loginData = Login.builder()
                 .email(EMAIL)
@@ -46,6 +56,9 @@ public class LoginTests extends RestAssuredSetup {
     }
 
     @Test
+    @Story("Testing login functionality - negative scenario")
+    @DisplayName("Missing email login test")
+    @Description("In this case, test login without email")
     public void missingEmailLoginTest() {
         Login loginData = Login.builder()
                 .password(PASSWORD)

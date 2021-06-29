@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import models.base.BaseModel;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ import lombok.ToString;
         "email",
         "password"
 })
-public class Login {
+public class Login extends BaseModel {
 
     @JsonProperty("email")
     public String email;
