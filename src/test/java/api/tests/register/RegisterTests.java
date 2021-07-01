@@ -28,10 +28,9 @@ public class RegisterTests extends ApiTestBase {
     @DisplayName("Success register test")
     @Description("In this case, test registering user")
     public void successfulRegisterTest() {
-        Login loginData = Login.builder()
-                .email(EMAIL)
-                .password(PASSWORD)
-                .build();
+        final Login loginData = new Login();
+        loginData.setEmail(EMAIL);
+        loginData.setPassword(PASSWORD);
 
         final String res =
                 getResponse(Method.POST, getRequestSpecification(loginData), EndPoints.REGISTER).asString();
@@ -44,9 +43,8 @@ public class RegisterTests extends ApiTestBase {
     @DisplayName("Missing password register test")
     @Description("In this case, test registering user without password")
     public void missingPasswordRegisterTest() {
-        Login loginData = Login.builder()
-                .email(EMAIL)
-                .build();
+        final Login loginData = new Login();
+        loginData.setEmail(EMAIL);
 
         final String res =
                 getResponse(Method.POST, getRequestSpecification(loginData), EndPoints.REGISTER)
@@ -60,9 +58,8 @@ public class RegisterTests extends ApiTestBase {
     @DisplayName("Missing username register test")
     @Description("In this case, test registering user without username")
     public void missingIUsernameRegisterTest() {
-        Login loginData = Login.builder()
-                .password(PASSWORD)
-                .build();
+        final Login loginData = new Login();
+        loginData.setPassword(PASSWORD);
 
         final String res =
                 getResponse(Method.POST, getRequestSpecification(loginData), EndPoints.REGISTER)

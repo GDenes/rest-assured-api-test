@@ -21,19 +21,20 @@ public class ApiTestBase {
     protected static final Logger logger = LoggerFactory.getLogger(ApiTestBase.class);
 
     private static final String BASE_URL = "https://reqres.in/api";
-    private static String browserPropertyValue;
+    private static String baseApiValue;
 
     static {
-        // get "baseApi" system property example: -DbaseApi=https://www.example.com/api
-        browserPropertyValue = System.getProperty("baseApi");
+        baseApiValue = System.getenv("BASE_API");
     }
 
     public RequestSpecification getRequestSpecification() {
-        RestAssured.baseURI = browserPropertyValue == null ? BASE_URL : browserPropertyValue;
+        RestAssured.baseURI = baseApiValue == null ? BASE_URL : baseApiValue;
         LogConfig logconfig = new LogConfig().enableLoggingOfRequestAndResponseIfValidationFails()
                 .enablePrettyPrinting(true);
         RestAssured.config().logConfig(logconfig);
-        return RestAssured.given().contentType(ContentType.JSON);
+        RequestSpecification request = RestAssured.given().contentType(ContentType.JSON);
+        logger.info(request.log().body().toString());
+        return request;
     }
 
     public RequestSpecification getRequestSpecification(Object requestBody) {
@@ -65,6 +66,7 @@ public class ApiTestBase {
             default:
                 break;
         }
+
         logger.info("Sending {} request to `{}{}` endpoint", methodType, RestAssured.baseURI, endPoint.getEndpoint());
 
         return response;

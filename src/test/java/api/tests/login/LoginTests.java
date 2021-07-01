@@ -28,10 +28,9 @@ public class LoginTests extends ApiTestBase {
     @DisplayName("Successfully login test")
     @Description("In this case, test login with valid credentials")
     public void successfulLoginTest() {
-        Login loginData = Login.builder()
-                .email(EMAIL)
-                .password(PASSWORD)
-                .build();
+        final Login loginData = new Login();
+        loginData.setEmail(EMAIL);
+        loginData.setPassword(PASSWORD);
 
         final String res =
                 getResponse(Method.POST, getRequestSpecification(loginData), EndPoints.LOGIN).asString();
@@ -44,9 +43,8 @@ public class LoginTests extends ApiTestBase {
     @DisplayName("Missing password login test")
     @Description("In this case, test login without password")
     public void missingPasswordLoginTest() {
-        Login loginData = Login.builder()
-                .email(EMAIL)
-                .build();
+        final Login loginData = new Login();
+        loginData.setEmail(EMAIL);
 
         final String res =
                 getResponse(Method.POST, getRequestSpecification(loginData), EndPoints.LOGIN)
@@ -60,9 +58,8 @@ public class LoginTests extends ApiTestBase {
     @DisplayName("Missing email login test")
     @Description("In this case, test login without email")
     public void missingEmailLoginTest() {
-        Login loginData = Login.builder()
-                .password(PASSWORD)
-                .build();
+        final Login loginData = new Login();
+        loginData.setPassword(PASSWORD);
 
         final String res =
                 getResponse(Method.POST, getRequestSpecification(loginData), EndPoints.LOGIN)
