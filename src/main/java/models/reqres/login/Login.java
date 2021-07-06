@@ -1,14 +1,9 @@
-package models.login;
+package models.reqres.login;
 
 import io.qameta.allure.Step;
-import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import models.base.BaseModel;
 
 

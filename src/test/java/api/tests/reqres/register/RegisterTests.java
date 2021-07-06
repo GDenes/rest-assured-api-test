@@ -1,15 +1,16 @@
-package api.tests.register;
+package api.tests.reqres.register;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import api.base.ApiTestBase;
 import api.enums.EndPoints;
 import api.enums.Method;
+import api.reqres.ApiReqres;
+import api.tests.base.ApiTestBase;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import models.login.Login;
+import models.reqres.login.Login;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,8 +33,7 @@ public class RegisterTests extends ApiTestBase {
         loginData.setEmail(EMAIL);
         loginData.setPassword(PASSWORD);
 
-        final String res =
-                getResponse(Method.POST, getRequestSpecification(loginData), EndPoints.REGISTER).asString();
+        final String res = ApiReqres.getRegisterResponse(loginData).asString();
         logger.info(res);
         assertTrue(res.contains(TOKEN));
     }
@@ -46,9 +46,7 @@ public class RegisterTests extends ApiTestBase {
         final Login loginData = new Login();
         loginData.setEmail(EMAIL);
 
-        final String res =
-                getResponse(Method.POST, getRequestSpecification(loginData), EndPoints.REGISTER)
-                        .asString();
+        final String res = ApiReqres.getRegisterResponse(loginData).asString();
         logger.info(res);
         assertTrue(res.contains(MISSING_PASSWORD));
     }
@@ -61,9 +59,7 @@ public class RegisterTests extends ApiTestBase {
         final Login loginData = new Login();
         loginData.setPassword(PASSWORD);
 
-        final String res =
-                getResponse(Method.POST, getRequestSpecification(loginData), EndPoints.REGISTER)
-                        .asString();
+        final String res = ApiReqres.getRegisterResponse(loginData).asString();
         logger.info(res);
         assertTrue(res.contains(MISSING_EMAIL_OR_USERNAME));
     }

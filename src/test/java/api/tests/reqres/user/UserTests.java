@@ -1,19 +1,22 @@
-package api.tests.user;
+package api.tests.reqres.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import api.enums.EndPoints;
 import api.enums.Method;
+import api.reqres.ApiReqres;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import api.tests.base.ApiTestBase;
 import io.qameta.allure.Story;
+import io.restassured.response.Response;
 import java.util.HashMap;
 import java.util.Map;
+import models.reqres.user.User;
+import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import api.base.ApiTestBase;
-import models.user.User;
 
 @Epic("Reqres Api tests")
 @Feature("User tests")
@@ -26,8 +29,8 @@ public class UserTests extends ApiTestBase {
     @DisplayName("User retrieval test")
     @Description("In this case, test retrieval user by id")
     public void getUserTest() {
-        final User user =
-                getResponse(Method.GET, getRequestSpecification(), EndPoints.USER).as(User.class);
+        final User user = ApiReqres.getUserResponse().as(User.class);
+
         assertEquals(EMAIL_TEST_DATA, user.getData().getEmail(), "Un correct email address");
     }
 
@@ -40,9 +43,12 @@ public class UserTests extends ApiTestBase {
         requestBody.put("name", "morpheus");
         requestBody.put("job", "leader");
 
-        final String res =
-                getResponse(Method.POST, getRequestSpecification(requestBody), EndPoints.USERS)
-                        .asPrettyString();
+        final String res = ApiReqres.getUserResponse(Method.POST, requestBody).asString();
+
+        final JSONObject resJsonObject = new JSONObject(res);
+        assertEquals(resJsonObject.get("name"), requestBody.get("name"), "Un correct name");
+        assertEquals(resJsonObject.get("job"), requestBody.get("job"), "Un correct job");
+
         logger.info(res);
     }
 
@@ -53,9 +59,12 @@ public class UserTests extends ApiTestBase {
     public void getAllUserTest() {
         Map<String, Integer> requestParams = new HashMap<String, Integer>();
         requestParams.put("page", 2);
-        final String res =
-                getResponse(Method.GET, getRequestSpecification(requestParams), EndPoints.USERS)
-                        .asPrettyString();
+
+        final String res = ApiReqres.getUserResponse(Method.POST, requestParams).asString();
+        final JSONObject resJsonObject = new JSONObject(res);
+
+        assertEquals(requestParams.get("page"), resJsonObject.get("page"),
+                "Invalid response page number");
         logger.info(res);
     }
 
@@ -64,9 +73,11 @@ public class UserTests extends ApiTestBase {
     @DisplayName("Get user by id test")
     @Description("In this case, test retrieval user by id")
     public void getUserByIdTest() {
-        final User user = getResponse(Method.GET,
-                getRequestSpecification().pathParam("userId", 4),
-                EndPoints.USER_BY_ID).as(User.class);
+        Map<String, Integer> pathParams = new HashMap<String, Integer>();
+        pathParams.put("userId", 4);
+
+        final User user = ApiReqres.getUserResponse(pathParams).as(User.class);
+
         assertEquals("eve.holt@reqres.in", user.getData().getEmail(), "Un correct email address");
         logger.info(user.toString());
     }
@@ -76,14 +87,20 @@ public class UserTests extends ApiTestBase {
     @DisplayName("Update user by id test")
     @Description("In this case, test retrieval user by id")
     public void updateUserTest() {
-        Map<String, String> requestBody = new HashMap<String, String>();
+        final Map<String, String> requestBody = new HashMap<String, String>();
         requestBody.put("name", "morpheus");
         requestBody.put("job", "zion resident");
 
-        final String res =
-                getResponse(Method.PUT, getRequestSpecification(requestBody)
-                        .pathParam("userId", 2), EndPoints.USER_BY_ID)
-                        .asPrettyString();
+        final Map<String, Integer> pathParams = new HashMap<>();
+        pathParams.put("userId", 2);
+
+        final String res = ApiReqres.getUpdateUserResponse(Method.PUT, pathParams, requestBody)
+                .asString();
+
+        final JSONObject jsonObject = new JSONObject(res);
+
+        assertEquals(requestBody.get("name"), jsonObject.get("name"), "Name didn't updated");
+        assertEquals(requestBody.get("job"), jsonObject.get("job"), "Job didn't updated");
         logger.info(res);
     }
 
@@ -92,11 +109,12 @@ public class UserTests extends ApiTestBase {
     @DisplayName("Delete user by id test")
     @Description("In this case, test deleting user by id")
     public void deleteUserTest() {
-        final int res = getResponse(Method.DELETE,
-                getRequestSpecification().pathParam("userId", 2),
-                EndPoints.USER_BY_ID).getStatusCode();
+        final Map<String, Integer> pathParams = new HashMap<>();
+        pathParams.put("userId", 2);
+
+        final int res = ApiReqres.getDeleteUserResponse(pathParams).getStatusCode();
         logger.info(String.valueOf(res));
-        assertEquals(res, 204, "User id is not valid, can not be deleted");
+        assertEquals(204, res, "User id is not valid, can not be deleted");
     }
 
 }
