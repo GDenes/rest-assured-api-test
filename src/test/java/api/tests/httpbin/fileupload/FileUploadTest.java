@@ -20,7 +20,7 @@ public class FileUploadTest extends ApiTestBase {
 
     private static final String FILE_UPLOAD_PATH = "src/main/resources/test_data/sampleFile.jpeg";
 
-    private static final String USER_AGENT_TEST_DATA = "Apache-HttpClient/4.5.13 (Java/1.8.0_151)";
+    private static final String USER_AGENT_TEST_DATA = "Apache-HttpClient/4.5.13 (Java";
     private static final String FILE_TEST_DATA = "data:application/octet-stream;base64,/9j/4AAQSkZJRgABAQAAAQABAAD";
 
     @Test
@@ -34,7 +34,7 @@ public class FileUploadTest extends ApiTestBase {
         final String userAgent = respJsonObj.getJSONObject("headers").get("User-Agent").toString();
         final String file = respJsonObj.getJSONObject("files").get("file").toString();
 
-        assertEquals(USER_AGENT_TEST_DATA, userAgent, "Wrong user agent value");
+        assertTrue(userAgent.contains(USER_AGENT_TEST_DATA), "Wrong user agent value");
         assertTrue(file.contains(FILE_TEST_DATA));
 
         logger.info(jsonString);
