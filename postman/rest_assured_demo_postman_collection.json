@@ -1,539 +1,532 @@
 {
-	"info": {
-		"_postman_id": "32a8c8ec-18c5-4897-925b-0c41366c3ea2",
-		"name": "RestAssured demo tests",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "reqres",
-			"item": [
-				{
-					"name": "user",
-					"item": [
-						{
-							"name": "User retrieval test",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"const EMAIL_TEST_DATA = \"janet.weaver@reqres.in\";\r",
-											"\r",
-											"pm.test('User retrieval test', () => {\r",
-											"    pm.response.to.have.status(200);\r",
-											"    var res = JSON.parse(responseBody);\r",
-											"    pm.expect(res.data.email).to.eql(EMAIL_TEST_DATA);\r",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [],
-								"body": {
-									"mode": "file",
-									"file": {}
-								},
-								"url": {
-									"raw": "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}/2",
-									"host": [
-										"{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}"
-									],
-									"path": [
-										"2"
-									],
-									"query": [
-										{
-											"key": "",
-											"value": null,
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create user test",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"const NAME = \"morpheus\"\r",
-											"const JOB = \"leader\"\r",
-											"\r",
-											"pm.test('Create user test', () => {\r",
-											"    pm.response.to.have.status(201);\r",
-											"    var res = JSON.parse(responseBody);\r",
-											"    pm.expect(res.name).to.eql(NAME);\r",
-											"    pm.expect(res.job).to.eql(JOB);\r",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"leader\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}",
-									"host": [
-										"{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}"
-									],
-									"query": [
-										{
-											"key": "",
-											"value": null,
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get all user test",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"const PAGE = 2;\r",
-											"const PER_PAGE = 6;\r",
-											"\r",
-											"pm.test('Get all user test', () => {\r",
-											"    pm.response.to.have.status(200);\r",
-											"    var res = JSON.parse(responseBody);\r",
-											"    pm.expect(res.page).to.eql(PAGE);\r",
-											"    pm.expect(res.per_page).to.eql(PER_PAGE);\r",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}?page=2",
-									"host": [
-										"{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}"
-									],
-									"query": [
-										{
-											"key": "page",
-											"value": "2"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update user test",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"const NAME = \"morpheus\"\r",
-											"const JOB = \"zion resident\"\r",
-											"\r",
-											"pm.test('Update user test', () => {\r",
-											"    pm.response.to.have.status(200);\r",
-											"    var res = JSON.parse(responseBody);\r",
-											"    pm.expect(res.name).to.eql(NAME);\r",
-											"    pm.expect(res.job).to.eql(JOB);\r",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}/2",
-									"host": [
-										"{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}"
-									],
-									"path": [
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete user by id test",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test('Delete user by id test', () => {\r",
-											"    pm.response.to.have.status(204);\r",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}/2",
-									"host": [
-										"{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}"
-									],
-									"path": [
-										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "register",
-					"item": [
-						{
-							"name": "Success register test",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"const TOKEN = \"QpwL5tke4Pnpja7X4\";\r",
-											"\r",
-											"pm.test('Success register test', () => {\r",
-											"    pm.response.to.have.status(200);\r",
-											"    var res = JSON.parse(responseBody);\r",
-											"    pm.expect(res.token).to.eql(TOKEN);\r",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"pistol\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{REQRES_BASE_URL}}{{REQRES_REGISTER_ENDPOINT}}",
-									"host": [
-										"{{REQRES_BASE_URL}}{{REQRES_REGISTER_ENDPOINT}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Missing password register test",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"const MISSING_PASSWORD = \"Missing password\";\r",
-											"\r",
-											"pm.test('Missing password login test', () => {\r",
-											"    pm.response.to.have.status(400);\r",
-											"    var res = JSON.parse(responseBody);\r",
-											"    pm.expect(res.error).to.eql(MISSING_PASSWORD);\r",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{REQRES_BASE_URL}}{{REQRES_REGISTER_ENDPOINT}}",
-									"host": [
-										"{{REQRES_BASE_URL}}{{REQRES_REGISTER_ENDPOINT}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Missing username register test",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"const MISSING_EMAIL_OR_USERNAME = \"Missing email or username\";\r",
-											"\r",
-											"pm.test('Missing username register test', () => {\r",
-											"    pm.response.to.have.status(400);\r",
-											"    var res = JSON.parse(responseBody);\r",
-											"    pm.expect(res.error).to.eql(MISSING_EMAIL_OR_USERNAME);\r",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"password\": \"pistol\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{REQRES_BASE_URL}}{{REQRES_REGISTER_ENDPOINT}}",
-									"host": [
-										"{{REQRES_BASE_URL}}{{REQRES_REGISTER_ENDPOINT}}"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "login",
-					"item": [
-						{
-							"name": "Successfully login test",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"type": "text/javascript",
-										"exec": [
-											"const TOKEN = \"QpwL5tke4Pnpja7X4\";\r",
-											"\r",
-											"pm.test('Successfully login test', () => {\r",
-											"    pm.response.to.have.status(200);\r",
-											"    var res = JSON.parse(responseBody);\r",
-											"    pm.expect(res.token).to.eql(TOKEN);\r",
-											"})\r",
-											"\r",
-											""
-										]
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{REQRES_BASE_URL}}{{REQRES_LOGIN_ENDPOINT}}",
-									"host": [
-										"{{REQRES_BASE_URL}}{{REQRES_LOGIN_ENDPOINT}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Missing email login test",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"type": "text/javascript",
-										"exec": [
-											"const MISSING_EMAIL_OR_USERNAME = \"Missing email or username\";\r",
-											"\r",
-											"pm.test('Missing email login test', () => {\r",
-											"    pm.response.to.have.status(400);\r",
-											"    var res = JSON.parse(responseBody);\r",
-											"    pm.expect(res.error).to.eql(MISSING_EMAIL_OR_USERNAME);\r",
-											"})\r",
-											"\r",
-											""
-										]
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"password\": \"cityslicka\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{REQRES_BASE_URL}}{{REQRES_LOGIN_ENDPOINT}}",
-									"host": [
-										"{{REQRES_BASE_URL}}{{REQRES_LOGIN_ENDPOINT}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Missing password login test",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"const MISSING_PASSWORD = \"Missing password\";\r",
-											"\r",
-											"pm.test('Missing password login test', () => {\r",
-											"    pm.response.to.have.status(400);\r",
-											"    var res = JSON.parse(responseBody);\r",
-											"    pm.expect(res.error).to.eql(MISSING_PASSWORD);\r",
-											"})\r",
-											"\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{REQRES_BASE_URL}}{{REQRES_LOGIN_ENDPOINT}}",
-									"host": [
-										"{{REQRES_BASE_URL}}{{REQRES_LOGIN_ENDPOINT}}"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "httpbin",
-			"item": [
-				{
-					"name": "file_upload",
-					"item": [
-						{
-							"name": "File upload test",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "",
-											"type": "file",
-											"src": []
-										}
-									]
-								},
-								"url": {
-									"raw": "{{HTTP_BIN_BASE_URL}}{{HTTP_BIN_FILE_UPLOAD}}",
-									"host": [
-										"{{HTTP_BIN_BASE_URL}}{{HTTP_BIN_FILE_UPLOAD}}"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "file_download",
-					"item": [
-						{
-							"name": "File download",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{HTTP_BIN_BASE_URL}}{{HTTP_BIN_FILE_DOWNLOAD}}",
-									"host": [
-										"{{HTTP_BIN_BASE_URL}}{{HTTP_BIN_FILE_DOWNLOAD}}"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "32a8c8ec-18c5-4897-925b-0c41366c3ea2",
+    "name": "RestAssured demo tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "reqres",
+      "item": [
+        {
+          "name": "user",
+          "item": [
+            {
+              "name": "User retrieval test",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const EMAIL_TEST_DATA = \"janet.weaver@reqres.in\";\r",
+                      "\r",
+                      "pm.test('User retrieval test', () => {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "    var res = JSON.parse(responseBody);\r",
+                      "    pm.expect(res.data.email).to.eql(EMAIL_TEST_DATA);\r",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  
+                ],
+                "body": {
+                  "mode": "file",
+                  "file": {
+                    
+                  }
+                },
+                "url": {
+                  "raw": "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}/2",
+                  "host": [
+                    "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}"
+                  ],
+                  "path": [
+                    "2"
+                  ],
+                  "query": [
+                    {
+                      "key": "",
+                      "value": null,
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": [
+                
+              ]
+            },
+            {
+              "name": "Create user test",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const NAME = \"morpheus\"\r",
+                      "const JOB = \"leader\"\r",
+                      "\r",
+                      "pm.test('Create user test', () => {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "    var res = JSON.parse(responseBody);\r",
+                      "    pm.expect(res.name).to.eql(NAME);\r",
+                      "    pm.expect(res.job).to.eql(JOB);\r",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"leader\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}",
+                  "host": [
+                    "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "",
+                      "value": null,
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": [
+                
+              ]
+            },
+            {
+              "name": "Get all user test",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const PAGE = 2;\r",
+                      "const PER_PAGE = 6;\r",
+                      "\r",
+                      "pm.test('Get all user test', () => {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "    var res = JSON.parse(responseBody);\r",
+                      "    pm.expect(res.page).to.eql(PAGE);\r",
+                      "    pm.expect(res.per_page).to.eql(PER_PAGE);\r",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  
+                ],
+                "url": {
+                  "raw": "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}?page=2",
+                  "host": [
+                    "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                
+              ]
+            },
+            {
+              "name": "Update user test",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const NAME = \"morpheus\"\r",
+                      "const JOB = \"zion resident\"\r",
+                      "\r",
+                      "pm.test('Update user test', () => {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "    var res = JSON.parse(responseBody);\r",
+                      "    pm.expect(res.name).to.eql(NAME);\r",
+                      "    pm.expect(res.job).to.eql(JOB);\r",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}/2",
+                  "host": [
+                    "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}"
+                  ],
+                  "path": [
+                    "2"
+                  ]
+                }
+              },
+              "response": [
+                
+              ]
+            },
+            {
+              "name": "Delete user by id test",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test('Delete user by id test', () => {\r",
+                      "    pm.response.to.have.status(204);\r",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  
+                ],
+                "url": {
+                  "raw": "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}/2",
+                  "host": [
+                    "{{REQRES_BASE_URL}}{{REQRES_USERS_ENDPOINT}}"
+                  ],
+                  "path": [
+                    "2"
+                  ]
+                }
+              },
+              "response": [
+                
+              ]
+            }
+          ]
+        },
+        {
+          "name": "register",
+          "item": [
+            {
+              "name": "Success register test",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const TOKEN = \"QpwL5tke4Pnpja7X4\";\r",
+                      "\r",
+                      "pm.test('Success register test', () => {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "    var res = JSON.parse(responseBody);\r",
+                      "    pm.expect(res.token).to.eql(TOKEN);\r",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"pistol\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{REQRES_BASE_URL}}{{REQRES_REGISTER_ENDPOINT}}",
+                  "host": [
+                    "{{REQRES_BASE_URL}}{{REQRES_REGISTER_ENDPOINT}}"
+                  ]
+                }
+              },
+              "response": [
+                
+              ]
+            },
+            {
+              "name": "Missing password register test",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const MISSING_PASSWORD = \"Missing password\";\r",
+                      "\r",
+                      "pm.test('Missing password login test', () => {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "    var res = JSON.parse(responseBody);\r",
+                      "    pm.expect(res.error).to.eql(MISSING_PASSWORD);\r",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"eve.holt@reqres.in\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{REQRES_BASE_URL}}{{REQRES_REGISTER_ENDPOINT}}",
+                  "host": [
+                    "{{REQRES_BASE_URL}}{{REQRES_REGISTER_ENDPOINT}}"
+                  ]
+                }
+              },
+              "response": [
+                
+              ]
+            },
+            {
+              "name": "Missing username register test",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const MISSING_EMAIL_OR_USERNAME = \"Missing email or username\";\r",
+                      "\r",
+                      "pm.test('Missing username register test', () => {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "    var res = JSON.parse(responseBody);\r",
+                      "    pm.expect(res.error).to.eql(MISSING_EMAIL_OR_USERNAME);\r",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"password\": \"pistol\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{REQRES_BASE_URL}}{{REQRES_REGISTER_ENDPOINT}}",
+                  "host": [
+                    "{{REQRES_BASE_URL}}{{REQRES_REGISTER_ENDPOINT}}"
+                  ]
+                }
+              },
+              "response": [
+                
+              ]
+            }
+          ]
+        },
+        {
+          "name": "login",
+          "item": [
+            {
+              "name": "Successfully login test",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const TOKEN = \"QpwL5tke4Pnpja7X4\";\r",
+                      "\r",
+                      "pm.test('Successfully login test', () => {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "    var res = JSON.parse(responseBody);\r",
+                      "    pm.expect(res.token).to.eql(TOKEN);\r",
+                      "})\r",
+                      "\r",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{REQRES_BASE_URL}}{{REQRES_LOGIN_ENDPOINT}}",
+                  "host": [
+                    "{{REQRES_BASE_URL}}{{REQRES_LOGIN_ENDPOINT}}"
+                  ]
+                }
+              },
+              "response": [
+                
+              ]
+            },
+            {
+              "name": "Missing email login test",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const MISSING_EMAIL_OR_USERNAME = \"Missing email or username\";\r",
+                      "\r",
+                      "pm.test('Missing email login test', () => {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "    var res = JSON.parse(responseBody);\r",
+                      "    pm.expect(res.error).to.eql(MISSING_EMAIL_OR_USERNAME);\r",
+                      "})\r",
+                      "\r",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"password\": \"cityslicka\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{REQRES_BASE_URL}}{{REQRES_LOGIN_ENDPOINT}}",
+                  "host": [
+                    "{{REQRES_BASE_URL}}{{REQRES_LOGIN_ENDPOINT}}"
+                  ]
+                }
+              },
+              "response": [
+                
+              ]
+            },
+            {
+              "name": "Missing password login test",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const MISSING_PASSWORD = \"Missing password\";\r",
+                      "\r",
+                      "pm.test('Missing password login test', () => {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "    var res = JSON.parse(responseBody);\r",
+                      "    pm.expect(res.error).to.eql(MISSING_PASSWORD);\r",
+                      "})\r",
+                      "\r",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"eve.holt@reqres.in\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{REQRES_BASE_URL}}{{REQRES_LOGIN_ENDPOINT}}",
+                  "host": [
+                    "{{REQRES_BASE_URL}}{{REQRES_LOGIN_ENDPOINT}}"
+                  ]
+                }
+              },
+              "response": [
+                
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
