@@ -3,8 +3,11 @@
 name: Postman tests run with `newman` via postman api
 
 on:
+    push:
+        branches:
+            - master
     schedule:
-        - cron:  '15 11 * * *'
+        - cron:  '05 07 * * *'
 
 jobs:
   newman:
@@ -13,6 +16,6 @@ jobs:
       - uses: actions/checkout@master
       - uses: matt-ball/newman-action@master
         with:
-          apiKey: ${{ env.API_KEY }}
+          apiKey: ${{ secrets.API_KEY }}
           collection: 32a8c8ec-18c5-4897-925b-0c41366c3ea2
           environment: 7600284-6f390dd7-398c-4bb5-83ce-6d203024aefd
