@@ -9,13 +9,31 @@ on:
     schedule:
         - cron:  '05 07 * * *'
 
+
 jobs:
-  newman:
+  testing-postman-collection:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: matt-ball/newman-action@master
-        with:
-          apiKey: ${{ secrets.API_KEY }}
-          collection: 32a8c8ec-18c5-4897-925b-0c41366c3ea2
-          environment: 7600284-6f390dd7-398c-4bb5-83ce-6d203024aefd
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with: 
+            node-version: '12.x'
+            
+      - name: Install newman
+        run: |
+         npm install -g newman
+         npm install -g newman-reporter-htmlextra
+         
+      - name: Make Directory for results
+        run: mkdir -p testResults
+        
+      - name: Run POSTMAN collection
+        run: |
+         newman run https://api.getpostman.com/collections/32a8c8ec-18c5-4897-925b-0c41366c3ea2?apikey=${{ secrets.API_KEY }} -e https://api.getpostman.com/environments/7600284-6f390dd7-398c-4bb5-83ce-6d203024aefd?apikey=PMAK-60e6fe9d8567be0051e2e0d0-3203b485fcb643812deb22a36c7b326640?apikey=${{ secrets.API_KEY }} -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-darkTheme  > testResults/runreport1.html
+    # Upload the contents of Test Results directory to workspace
+      - name: Output the run Details
+        uses: actions/upload-artifact@v2
+        with: 
+         name: RunReports
+         path: testResults
