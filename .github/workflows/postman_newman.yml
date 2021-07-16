@@ -32,7 +32,7 @@ jobs:
         env:
             POSTMAN_API_KEY: ${{ secrets.API_KEY }}
         run: |
-         newman run https://api.getpostman.com/collections/32a8c8ec-18c5-4897-925b-0c41366c3ea2?apikey="$POSTMAN_API_KEY" -e https://api.getpostman.com/environments/7600284-6f390dd7-398c-4bb5-83ce-6d203024aefd?apikey="$POSTMAN_API_KEY" -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-darkTheme  > testResults/runreport1.html
+         newman run https://api.getpostman.com/collections/32a8c8ec-18c5-4897-925b-0c41366c3ea2?apikey= ${{ secrets.API_KEY }} -e https://api.getpostman.com/environments/7600284-6f390dd7-398c-4bb5-83ce-6d203024aefd?apikey= ${{ secrets.API_KEY }} -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-darkTheme  > testResults/runreport1.html
     # Upload the contents of Test Results directory to workspace
       - name: Output the run Details
         uses: actions/upload-artifact@v2
